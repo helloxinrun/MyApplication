@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+       <!--<com.example.luoxinrun.myapplication.bubbleview.BubbleLinearLayout-->
+           <!--android:layout_width="200dp"-->
+           <!--android:layout_height="wrap_content"-->
+           <!--app:arrowWidth="8dp"-->
+           <!--app:angle="8dp"-->
+           <!--app:arrowHeight="10dp"-->
+           <!--app:arrowPosition="14dp"-->
+           <!--app:arrowLocation="top"-->
+           <!--app:arrowCenter="true"-->
+           <!--app:bubbleColor="#7EC0EE"-->
+           <!--&gt;-->
+           <!--<ImageView-->
+               <!--android:layout_width="20dp"-->
+               <!--android:layout_height="80dp"-->
+               <!--android:background="#f44040"-->
+               <!--/>-->
+       <!--</com.example.luoxinrun.myapplication.bubbleview.BubbleLinearLayout>-->
+
+
+        <com.example.luoxinrun.myapplication.bubbleview.BubbleTextView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            app:arrowWidth="8dp"
+            app:angle="8dp"
+            app:arrowHeight="10dp"
+            app:arrowPosition="14dp"
+            app:arrowLocation="right"
+            app:arrowCenter="true"
+            app:bubbleColor="#7EC0EE"
+            android:text="111111111111dfasgragagdvfadvfdvkfhdjahkljdhvjkhvbjkasd"
+            android:gravity="center"
+            android:id="@+id/bubbleTextView" />
+
+    </LinearLayout>
+
+</layout>
