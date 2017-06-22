@@ -24,11 +24,11 @@ public class BubbleDrawable extends Drawable {
     private BitmapShader mBitmapShader;
     private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private float mArrowWidth;
-    private float mBubbleRadius;
     private float mArrowHeight;
-    private float mArrowPosition;
+    private float mBubbleRadius;
     private int mBubbleColor;
     private Bitmap mBubbleBitmap;
+    private float mArrowPosition;
     private ArrowLocation mArrowLocation;
     private ArrowRelative mArrowRelative;
     private BubbleType mBubbleType;
