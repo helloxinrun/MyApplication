@@ -13,19 +13,25 @@
         <com.example.luoxinrun.myapplication.bubbleview.BubbleTextView
             android:id="@+id/bubbleTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:padding="20dp"
             android:gravity="center"
             android:text="111111111111dfasgragagdvfadvfdvkfhdjahkljdhvjkhvbjkasd"
-            app:arrowHeight="50dp"
-            app:arrowLocation="top"
-            app:arrowPosition="10dp"
-            app:arrowRelative="end"
+            app:arrowHeight="10dp"
+            app:arrowLocation="bottom"
+            app:arrowPosition="-100dp"
+            app:arrowRelative="center"
             app:arrowWidth="20dp"
             app:bubbleColor="#7EC0EE"
             app:bubbleRadius="25dp" />
+
+
+
+
+
+
     </LinearLayout>
 
 </layout>
