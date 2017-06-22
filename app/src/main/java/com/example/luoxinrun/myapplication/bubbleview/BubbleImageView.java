@@ -28,7 +28,6 @@ public class BubbleImageView extends ImageView {
     private float mArrowPosition;
     private Bitmap mBitmap;
     private BubbleDrawable.ArrowLocation mArrowLocation;
-    private boolean mArrowCenter;
     public BubbleImageView(Context context) {
         super(context);
         initView(null);
@@ -48,16 +47,15 @@ public class BubbleImageView extends ImageView {
         if (attrs != null){
             TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.BubbleView);
             mArrowWidth = array.getDimension(R.styleable.BubbleView_arrowWidth,
-                    BubbleDrawable.Builder.DEFAULT_ARROW_WITH);
+                    BubbleDrawable.Builder.DEFAULT_ARROW_WIDTH);
             mArrowHeight = array.getDimension(R.styleable.BubbleView_arrowHeight,
                     BubbleDrawable.Builder.DEFAULT_ARROW_HEIGHT);
-            mAngle = array.getDimension(R.styleable.BubbleView_angle,
-                    BubbleDrawable.Builder.DEFAULT_ANGLE);
+            mAngle = array.getDimension(R.styleable.BubbleView_bubbleRadius,
+                    BubbleDrawable.Builder.DEFAULT_BUBBLE_RADIUS);
             mArrowPosition = array.getDimension(R.styleable.BubbleView_arrowPosition,
                     BubbleDrawable.Builder.DEFAULT_ARROW_POSITION);
             int location = array.getInt(R.styleable.BubbleView_arrowLocation, 0);
             mArrowLocation = BubbleDrawable.ArrowLocation.mapIntToValue(location);
-            mArrowCenter = array.getBoolean(R.styleable.BubbleView_arrowCenter, false);
             array.recycle();
         }
     }
@@ -108,13 +106,12 @@ public class BubbleImageView extends ImageView {
         bubbleDrawable = new BubbleDrawable.Builder()
                 .rect(rectF)
                 .arrowLocation(mArrowLocation)
-                .angle(mAngle)
+                .bubbleRadius(mAngle)
                 .arrowHeight(mArrowHeight)
                 .arrowWidth(mArrowWidth)
                 .bubbleType(BubbleDrawable.BubbleType.BITMAP)
                 .arrowPosition(mArrowPosition)
                 .bubbleBitmap(mBitmap)
-                .arrowCenter(mArrowCenter)
                 .build();
     }
 

@@ -15,12 +15,11 @@ import com.example.luoxinrun.myapplication.R;
 public class BubbleLinearLayout extends LinearLayout {
     private BubbleDrawable bubbleDrawable;
     private float mArrowWidth;
-    private float mAngle;
+    private float mBubbleRadius;
     private float mArrowHeight;
     private float mArrowPosition;
     private BubbleDrawable.ArrowLocation mArrowLocation;
     private int bubbleColor;
-    private boolean mArrowCenter;
     public BubbleLinearLayout(Context context) {
         super(context);
         initView(null);
@@ -36,18 +35,17 @@ public class BubbleLinearLayout extends LinearLayout {
         if (attrs != null){
             TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.BubbleView);
             mArrowWidth = array.getDimension(R.styleable.BubbleView_arrowWidth,
-                    BubbleDrawable.Builder.DEFAULT_ARROW_WITH);
+                    BubbleDrawable.Builder.DEFAULT_ARROW_WIDTH);
             mArrowHeight = array.getDimension(R.styleable.BubbleView_arrowHeight,
                     BubbleDrawable.Builder.DEFAULT_ARROW_HEIGHT);
-            mAngle = array.getDimension(R.styleable.BubbleView_angle,
-                    BubbleDrawable.Builder.DEFAULT_ANGLE);
+            mBubbleRadius = array.getDimension(R.styleable.BubbleView_bubbleRadius,
+                    BubbleDrawable.Builder.DEFAULT_BUBBLE_RADIUS);
             mArrowPosition = array.getDimension(R.styleable.BubbleView_arrowPosition,
                     BubbleDrawable.Builder.DEFAULT_ARROW_POSITION);
             bubbleColor = array.getColor(R.styleable.BubbleView_bubbleColor,
                     BubbleDrawable.Builder.DEFAULT_BUBBLE_COLOR);
             int location = array.getInt(R.styleable.BubbleView_arrowLocation, 0);
             mArrowLocation = BubbleDrawable.ArrowLocation.mapIntToValue(location);
-            mArrowCenter = array.getBoolean(R.styleable.BubbleView_arrowCenter, false);
             array.recycle();
         }
     }
@@ -68,12 +66,11 @@ public class BubbleLinearLayout extends LinearLayout {
                 .rect(rectF)
                 .arrowLocation(mArrowLocation)
                 .bubbleType(BubbleDrawable.BubbleType.COLOR)
-                .angle(mAngle)
+                .bubbleRadius(mBubbleRadius)
                 .arrowHeight(mArrowHeight)
                 .arrowWidth(mArrowWidth)
                 .arrowPosition(mArrowPosition)
                 .bubbleColor(bubbleColor)
-                .arrowCenter(mArrowCenter)
                 .build();
     }
 
