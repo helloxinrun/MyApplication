@@ -11,23 +11,21 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.ImageView;
-import android.widget.VideoView;
 
 import com.example.luoxinrun.myapplication.R;
 
 
-/**
- * Created by lgp on 2015/3/25.
- */
+
 public class BubbleImageView extends ImageView {
     private BubbleDrawable bubbleDrawable;
     private Drawable sourceDrawable;
     private float mArrowWidth;
-    private float mAngle;
     private float mArrowHeight;
-    private float mArrowPosition;
+    private float mBubbleRadius;
     private Bitmap mBitmap;
+    private float mArrowPosition;
     private BubbleDrawable.ArrowLocation mArrowLocation;
+    private BubbleDrawable.ArrowRelative mArrowRelative;
     public BubbleImageView(Context context) {
         super(context);
         initView(null);
@@ -44,33 +42,50 @@ public class BubbleImageView extends ImageView {
     }
 
     private void initView(AttributeSet attrs){
-        if (attrs != null){
+        if (attrs != null) {
             TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.BubbleView);
             mArrowWidth = array.getDimension(R.styleable.BubbleView_arrowWidth,
                     BubbleDrawable.Builder.DEFAULT_ARROW_WIDTH);
             mArrowHeight = array.getDimension(R.styleable.BubbleView_arrowHeight,
                     BubbleDrawable.Builder.DEFAULT_ARROW_HEIGHT);
-            mAngle = array.getDimension(R.styleable.BubbleView_bubbleRadius,
+            mBubbleRadius = array.getDimension(R.styleable.BubbleView_bubbleRadius,
                     BubbleDrawable.Builder.DEFAULT_BUBBLE_RADIUS);
             mArrowPosition = array.getDimension(R.styleable.BubbleView_arrowPosition,
                     BubbleDrawable.Builder.DEFAULT_ARROW_POSITION);
             int location = array.getInt(R.styleable.BubbleView_arrowLocation, 0);
             mArrowLocation = BubbleDrawable.ArrowLocation.mapIntToValue(location);
+            int relative = array.getInt(R.styleable.BubbleView_arrowRelative, 0);
+            mArrowRelative = BubbleDrawable.ArrowRelative.mapIntToValue(relative);
             array.recycle();
         }
+        setUpPadding();
+    }
+
+    private void setUpPadding() {
+        int left = getPaddingLeft();
+        int right = getPaddingRight();
+        int top = getPaddingTop();
+        int bottom = getPaddingBottom();
+        switch (mArrowLocation) {
+            case LEFT:
+                left += mArrowWidth;
+                break;
+            case RIGHT:
+                right += mArrowWidth;
+                break;
+            case TOP:
+                top += mArrowHeight;
+                break;
+            case BOTTOM:
+                bottom += mArrowHeight;
+                break;
+        }
+        setPadding(left, top, right, bottom);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int width = getMeasuredWidth();
-        int height = getMeasuredHeight();
-        if (width <= 0 && height > 0){
-            setMeasuredDimension(height , height);
-        }
-        if (height <= 0 && width > 0){
-            setMeasuredDimension(width , width);
-        }
     }
 
     @Override
@@ -89,35 +104,9 @@ public class BubbleImageView extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        int saveCount = canvas.getSaveCount();
-        canvas.translate(getPaddingLeft(), getPaddingTop());
         if (bubbleDrawable != null)
             bubbleDrawable.draw(canvas);
-        canvas.restoreToCount(saveCount);
-    }
-
-    private void setUp(int left, int right, int top, int bottom){
-        if (right <= left || bottom <= top)
-            return;
-
-        RectF rectF = new RectF(left, top, right, bottom);
-        if (sourceDrawable != null)
-            mBitmap = getBitmapFromDrawable(sourceDrawable);
-        bubbleDrawable = new BubbleDrawable.Builder()
-                .rect(rectF)
-                .arrowLocation(mArrowLocation)
-                .bubbleRadius(mAngle)
-                .arrowHeight(mArrowHeight)
-                .arrowWidth(mArrowWidth)
-                .bubbleType(BubbleDrawable.BubbleType.BITMAP)
-                .arrowPosition(mArrowPosition)
-                .bubbleBitmap(mBitmap)
-                .build();
-    }
-
-    private void setUp(int width, int height){
-        setUp(getPaddingLeft(), width - getPaddingRight(),
-                getPaddingTop(), height - getPaddingBottom());
+        super.onDraw(canvas);
     }
 
     private void setUp(){
@@ -141,11 +130,31 @@ public class BubbleImageView extends ImageView {
         setUp(width, height);
     }
 
+    private void setUp(int width, int height){
+        setUp(0, 0, width, height);
+    }
+
+    private void setUp(int left,  int top, int right, int bottom){
+        RectF rectF = new RectF(left, top, right, bottom);
+        if (sourceDrawable != null)
+            mBitmap = getBitmapFromDrawable(sourceDrawable);
+        bubbleDrawable = new BubbleDrawable.Builder()
+                .rect(rectF)
+                .bubbleType(BubbleDrawable.BubbleType.BITMAP)
+                .arrowWidth(mArrowWidth)
+                .arrowHeight(mArrowHeight)
+                .arrowLocation(mArrowLocation)
+                .arrowRelative(mArrowRelative)
+                .arrowPosition(mArrowPosition)
+                .bubbleRadius(mBubbleRadius)
+                .bubbleBitmap(mBitmap)
+                .build();
+    }
+
     @Override
     public void setImageBitmap(Bitmap mBitmap) {
         if (mBitmap == null)
             return;
-        this.mBitmap = mBitmap;
         sourceDrawable = new BitmapDrawable(getResources(), mBitmap);
         setUp();
         super.setImageDrawable(bubbleDrawable);
@@ -156,8 +165,13 @@ public class BubbleImageView extends ImageView {
         if (drawable == null )
             return;
         sourceDrawable = drawable;
-        setUp();
-        super.setImageDrawable(bubbleDrawable);
+    }
+
+    @Override
+    public void setBackground(Drawable background) {
+        if (background == null )
+            return;
+        sourceDrawable = background;
     }
 
     @Override
@@ -173,7 +187,7 @@ public class BubbleImageView extends ImageView {
     }
 
     private Bitmap getBitmapFromDrawable(Drawable drawable) {
-        return getBitmapFromDrawable(getContext(), drawable, getWidth(), getWidth(), 25);
+        return getBitmapFromDrawable(getContext(), drawable, getWidth(), getHeight(), 25);
     }
 
     public static Bitmap getBitmapFromDrawable(Context mContext, Drawable drawable, int width, int height, int defaultSize) {

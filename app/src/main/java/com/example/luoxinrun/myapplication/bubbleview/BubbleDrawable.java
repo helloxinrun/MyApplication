@@ -13,11 +13,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
-/**
- * Created by lgp on 2015/3/24.
- */
+
 public class BubbleDrawable extends Drawable {
     private RectF mRect;
     private Path mPath = new Path();
@@ -58,7 +55,7 @@ public class BubbleDrawable extends Drawable {
 
     @Override
     public int getOpacity() {
-        return PixelFormat.TRANSLUCENT;
+        return PixelFormat.TRANSLUCENT;  //窗口支持透明度
     }
 
     @Override
@@ -81,10 +78,10 @@ public class BubbleDrawable extends Drawable {
                     return;
                 if (mBitmapShader == null) {
                     mBitmapShader = new BitmapShader(mBubbleBitmap, Shader.TileMode.CLAMP,
-                            Shader.TileMode.CLAMP);
+                            Shader.TileMode.CLAMP);  // CLAMP表示，当所画图形的尺寸大于Bitmap的尺寸的时候，会用Bitmap四边的颜色填充剩余空间
                 }
-                mPaint.setShader(mBitmapShader);
                 setUpShaderMatrix();
+                mPaint.setShader(mBitmapShader);
                 break;
         }
         setUpPath(mArrowLocation, mPath);
@@ -299,7 +296,7 @@ public class BubbleDrawable extends Drawable {
         public static float DEFAULT_ARROW_HEIGHT = 10;
         public static float DEFAULT_ARROW_POSITION = 0;
         public static float DEFAULT_BUBBLE_RADIUS = 0;
-        public static int DEFAULT_BUBBLE_COLOR = Color.RED;
+        public static int DEFAULT_BUBBLE_COLOR = Color.WHITE;
 
         private RectF mRect;
         private float mArrowWidth = DEFAULT_ARROW_WIDTH;

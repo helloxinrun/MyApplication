@@ -7,41 +7,69 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:background="#dedede"
+        android:orientation="vertical">
 
-        <com.example.luoxinrun.myapplication.bubbleview.BubbleTextView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="111111111111dfasgr"
-            app:arrowHeight="130dp"
-            app:arrowLocation="bottom"
-            app:arrowPosition="-100dp"
-            app:arrowRelative="center"
-            app:arrowWidth="20dp"
-            app:bubbleColor="#7EC0EE"
-            app:bubbleRadius="25dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <com.example.luoxinrun.myapplication.bubbleview.BubbleLinearLayout
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            app:arrowHeight="130dp"
-            app:arrowLocation="top"
-            app:arrowPosition="10dp"
-            app:arrowRelative="center"
-            app:arrowWidth="20dp"
-            app:bubbleColor="#7EC0EE"
-            app:bubbleRadius="25dp">
-
-            <TextView
+            <com.example.luoxinrun.myapplication.bubbleview.BubbleTextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hhhhhhhggggggggggggggggggggggggggggggggg" />
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="111111111111dfasgr"
+                app:arrowHeight="130dp"
+                app:arrowLocation="bottom"
+                app:arrowPosition="0dp"
+                app:arrowRelative="center"
+                app:arrowWidth="20dp"
+                app:bubbleColor="#7eeea7"
+                app:bubbleRadius="25dp" />
 
-        </com.example.luoxinrun.myapplication.bubbleview.BubbleLinearLayout>
+            <com.example.luoxinrun.myapplication.bubbleview.BubbleLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:arrowHeight="80dp"
+                app:arrowLocation="top"
+                app:arrowPosition="10dp"
+                app:arrowRelative="begin"
+                app:arrowWidth="20dp"
+                app:bubbleColor="#de0cdede"
+                app:bubbleRadius="25dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@mipmap/mine_bg" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="hhhhhhhggggggggggggggggggggggggggggggggggg" />
+
+            </com.example.luoxinrun.myapplication.bubbleview.BubbleLinearLayout>
+
+        </LinearLayout>
+
+        <com.example.luoxinrun.myapplication.bubbleview.BubbleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/mine_bg"
+            app:arrowWidth="20dp"
+            app:arrowHeight="10dp"
+            app:arrowLocation="right"
+            app:arrowPosition="0dp"
+            app:bubbleColor="#7EC0EE"
+            app:arrowRelative="center"
+            app:bubbleRadius="25dp" />
 
     </LinearLayout>
 

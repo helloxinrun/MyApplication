@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 import com.example.luoxinrun.myapplication.R;
 
-/**
- * Created by lgp on 2015/3/25.
- */
+
 public class BubbleLinearLayout extends LinearLayout {
     private BubbleDrawable mBubbleDrawable;
     private float mArrowWidth;
@@ -109,7 +108,7 @@ public class BubbleLinearLayout extends LinearLayout {
 
     private void setUp(int width, int height) {
         setUp(0, 0, width, height);
-        setBackgroundDrawable(mBubbleDrawable);
+        setBackground(mBubbleDrawable);
     }
 
     private void setUp(int left,  int top, int right, int bottom){
@@ -125,6 +124,11 @@ public class BubbleLinearLayout extends LinearLayout {
                 .bubbleRadius(mBubbleRadius)
                 .bubbleColor(mBubbleColor)
                 .build();
+    }
+
+    @Override
+    public void setBackground(Drawable background) {
+        super.setBackground(background);
     }
 
 }

@@ -5,13 +5,12 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.luoxinrun.myapplication.R;
 
-/**
- * Created by lgp on 2015/3/24.
- */
+
 public class BubbleTextView extends TextView {
     private BubbleDrawable mBubbleDrawable;
     private float mArrowWidth;
