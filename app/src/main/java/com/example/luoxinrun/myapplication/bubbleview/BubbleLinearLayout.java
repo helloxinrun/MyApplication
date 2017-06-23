@@ -2,24 +2,26 @@ package com.example.luoxinrun.myapplication.bubbleview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 import com.example.luoxinrun.myapplication.R;
 
-
 /**
  * Created by lgp on 2015/3/25.
  */
 public class BubbleLinearLayout extends LinearLayout {
-    private BubbleDrawable bubbleDrawable;
+    private BubbleDrawable mBubbleDrawable;
     private float mArrowWidth;
-    private float mBubbleRadius;
     private float mArrowHeight;
+    private float mBubbleRadius;
+    private int mBubbleColor;
     private float mArrowPosition;
     private BubbleDrawable.ArrowLocation mArrowLocation;
-    private int bubbleColor;
+    private BubbleDrawable.ArrowRelative mArrowRelative;
+
     public BubbleLinearLayout(Context context) {
         super(context);
         initView(null);
@@ -30,9 +32,13 @@ public class BubbleLinearLayout extends LinearLayout {
         initView(attrs);
     }
 
+    public BubbleLinearLayout(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initView(attrs);
+    }
 
-    private void initView(AttributeSet attrs){
-        if (attrs != null){
+    private void initView(AttributeSet attrs) {
+        if (attrs != null) {
             TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.BubbleView);
             mArrowWidth = array.getDimension(R.styleable.BubbleView_arrowWidth,
                     BubbleDrawable.Builder.DEFAULT_ARROW_WIDTH);
@@ -40,14 +46,44 @@ public class BubbleLinearLayout extends LinearLayout {
                     BubbleDrawable.Builder.DEFAULT_ARROW_HEIGHT);
             mBubbleRadius = array.getDimension(R.styleable.BubbleView_bubbleRadius,
                     BubbleDrawable.Builder.DEFAULT_BUBBLE_RADIUS);
+            mBubbleColor = array.getColor(R.styleable.BubbleView_bubbleColor,
+                    BubbleDrawable.Builder.DEFAULT_BUBBLE_COLOR);
             mArrowPosition = array.getDimension(R.styleable.BubbleView_arrowPosition,
                     BubbleDrawable.Builder.DEFAULT_ARROW_POSITION);
-            bubbleColor = array.getColor(R.styleable.BubbleView_bubbleColor,
-                    BubbleDrawable.Builder.DEFAULT_BUBBLE_COLOR);
             int location = array.getInt(R.styleable.BubbleView_arrowLocation, 0);
             mArrowLocation = BubbleDrawable.ArrowLocation.mapIntToValue(location);
+            int relative = array.getInt(R.styleable.BubbleView_arrowRelative, 0);
+            mArrowRelative = BubbleDrawable.ArrowRelative.mapIntToValue(relative);
             array.recycle();
         }
+        setUpPadding();
+    }
+
+    private void setUpPadding() {
+        int left = getPaddingLeft();
+        int right = getPaddingRight();
+        int top = getPaddingTop();
+        int bottom = getPaddingBottom();
+        switch (mArrowLocation) {
+            case LEFT:
+                left += mArrowWidth;
+                break;
+            case RIGHT:
+                right += mArrowWidth;
+                break;
+            case TOP:
+                top += mArrowHeight;
+                break;
+            case BOTTOM:
+                bottom += mArrowHeight;
+                break;
+        }
+        setPadding(left, top, right, bottom);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
@@ -58,36 +94,37 @@ public class BubbleLinearLayout extends LinearLayout {
         }
     }
 
-    private void setUp(int left, int right, int top, int bottom){
-        if (right < left || bottom < top)
-            return;
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        setUp(getWidth(), getHeight());
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (mBubbleDrawable != null)
+            mBubbleDrawable.draw(canvas);
+        super.onDraw(canvas);
+    }
+
+    private void setUp(int width, int height) {
+        setUp(0, 0, width, height);
+        setBackgroundDrawable(mBubbleDrawable);
+    }
+
+    private void setUp(int left,  int top, int right, int bottom){
         RectF rectF = new RectF(left, top, right, bottom);
-        bubbleDrawable = new BubbleDrawable.Builder()
+        mBubbleDrawable = new BubbleDrawable.Builder()
                 .rect(rectF)
-                .arrowLocation(mArrowLocation)
                 .bubbleType(BubbleDrawable.BubbleType.COLOR)
-                .bubbleRadius(mBubbleRadius)
-                .arrowHeight(mArrowHeight)
                 .arrowWidth(mArrowWidth)
+                .arrowHeight(mArrowHeight)
+                .arrowLocation(mArrowLocation)
+                .arrowRelative(mArrowRelative)
                 .arrowPosition(mArrowPosition)
-                .bubbleColor(bubbleColor)
+                .bubbleRadius(mBubbleRadius)
+                .bubbleColor(mBubbleColor)
                 .build();
-    }
-
-    private void setUp(int width, int height){
-        setUp(getPaddingLeft(),  width - getPaddingRight(),
-                getPaddingTop(), height - getPaddingBottom());
-        setBackgroundDrawable(bubbleDrawable);
-    }
-
-    public void setUpBubbleDrawable () {
-        setBackgroundDrawable(null);
-        post(new Runnable() {
-            @Override
-            public void run() {
-                setUp(getWidth(), getHeight());
-            }
-        });
     }
 
 }

@@ -5,8 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.TypedValue;
 import android.widget.TextView;
 
 import com.example.luoxinrun.myapplication.R;
@@ -17,10 +15,10 @@ import com.example.luoxinrun.myapplication.R;
 public class BubbleTextView extends TextView {
     private BubbleDrawable mBubbleDrawable;
     private float mArrowWidth;
-    private float mBubbleRadius;
     private float mArrowHeight;
-    private float mArrowPosition;
+    private float mBubbleRadius;
     private int mBubbleColor;
+    private float mArrowPosition;
     private BubbleDrawable.ArrowLocation mArrowLocation;
     private BubbleDrawable.ArrowRelative mArrowRelative;
 
@@ -48,10 +46,10 @@ public class BubbleTextView extends TextView {
                     BubbleDrawable.Builder.DEFAULT_ARROW_HEIGHT);
             mBubbleRadius = array.getDimension(R.styleable.BubbleView_bubbleRadius,
                     BubbleDrawable.Builder.DEFAULT_BUBBLE_RADIUS);
-            mArrowPosition = array.getDimension(R.styleable.BubbleView_arrowPosition,
-                    BubbleDrawable.Builder.DEFAULT_ARROW_POSITION);
             mBubbleColor = array.getColor(R.styleable.BubbleView_bubbleColor,
                     BubbleDrawable.Builder.DEFAULT_BUBBLE_COLOR);
+            mArrowPosition = array.getDimension(R.styleable.BubbleView_arrowPosition,
+                    BubbleDrawable.Builder.DEFAULT_ARROW_POSITION);
             int location = array.getInt(R.styleable.BubbleView_arrowLocation, 0);
             mArrowLocation = BubbleDrawable.ArrowLocation.mapIntToValue(location);
             int relative = array.getInt(R.styleable.BubbleView_arrowRelative, 0);
@@ -99,7 +97,7 @@ public class BubbleTextView extends TextView {
     @Override
     public void layout(int l, int t, int r, int b) {
         super.layout(l, t, r, b);
-        setUp();
+        setUp(getWidth(), getHeight());
     }
 
     @Override
@@ -113,28 +111,19 @@ public class BubbleTextView extends TextView {
         setUp(0, 0, width, height);
     }
 
-    private void setUp() {
-        setUp(getWidth(), getHeight());
-    }
-
     private void setUp(int left, int top, int right, int bottom) {
         RectF rectF = new RectF(left, top, right, bottom);
         mBubbleDrawable = new BubbleDrawable.Builder()
                 .rect(rectF)
                 .bubbleType(BubbleDrawable.BubbleType.COLOR)
+                .arrowWidth(mArrowWidth)
+                .arrowHeight(mArrowHeight)
                 .arrowLocation(mArrowLocation)
                 .arrowRelative(mArrowRelative)
                 .arrowPosition(mArrowPosition)
-                .arrowHeight(mArrowHeight)
-                .arrowWidth(mArrowWidth)
                 .bubbleRadius(mBubbleRadius)
                 .bubbleColor(mBubbleColor)
                 .build();
-    }
-
-    public static float dp2px(Context context, float dp) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                context.getResources().getDisplayMetrics());
     }
 
 }

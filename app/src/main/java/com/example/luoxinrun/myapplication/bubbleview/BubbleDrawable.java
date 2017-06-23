@@ -24,11 +24,11 @@ public class BubbleDrawable extends Drawable {
     private BitmapShader mBitmapShader;
     private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private float mArrowWidth;
-    private float mBubbleRadius;
     private float mArrowHeight;
-    private float mArrowPosition;
+    private float mBubbleRadius;
     private int mBubbleColor;
     private Bitmap mBubbleBitmap;
+    private float mArrowPosition;
     private ArrowLocation mArrowLocation;
     private ArrowRelative mArrowRelative;
     private BubbleType mBubbleType;
@@ -122,43 +122,57 @@ public class BubbleDrawable extends Drawable {
 
     private void setUpLeftPath(RectF rect, Path path) {
         float position;
-        if (mArrowRelative == ArrowRelative.BEGIN) {
-            position = mArrowPosition;
-        } else if (mArrowRelative == ArrowRelative.CENTER) {
-            position = (rect.bottom - rect.top) / 2 - mArrowHeight / 2;
-        } else if (mArrowRelative == ArrowRelative.END) {
-            position = rect.bottom - mArrowPosition - mArrowHeight;
-        }
-
-        path.moveTo(rect.left + mArrowWidth + mBubbleRadius, rect.top);
-        Log.e("++++++TAG", "+++++++++++++++width" + rect.width() + "++++++++++:" + rect.right);
-        path.lineTo(rect.right - mBubbleRadius, rect.top);
-        path.arcTo(new RectF(rect.right - mBubbleRadius, rect.top, rect.right, mBubbleRadius + rect.top), 270, 90);
-        path.lineTo(rect.right, rect.bottom - mBubbleRadius);
-        path.arcTo(new RectF(rect.right - mBubbleRadius, rect.bottom - mBubbleRadius, rect.right, rect.bottom), 0, 90);
-        path.lineTo(rect.left + mArrowWidth + mBubbleRadius, rect.bottom);
-        path.arcTo(new RectF(rect.left + mArrowWidth, rect.bottom - mBubbleRadius, rect.left + mArrowWidth + mBubbleRadius, rect.bottom), 90, 90);
-        path.lineTo(rect.left + mArrowWidth, mArrowHeight + mArrowPosition);
-        path.lineTo(rect.left, mArrowPosition + mArrowHeight / 2);
-        path.lineTo(rect.left + mArrowWidth, mArrowPosition);
-        path.lineTo(rect.left + mArrowWidth, rect.top + mBubbleRadius);
-        path.arcTo(new RectF(rect.left + mArrowWidth, rect.top, mBubbleRadius + rect.left + mArrowWidth, mBubbleRadius + rect.top), 180, 90);
-        path.close();
-    }
-
-    private void setUpTopPath(RectF rect, Path path) {
-        float position;
-        if ((rect.width() - 2 * mBubbleRadius) < mArrowWidth){
-            mArrowWidth = rect.width() - 2 * mBubbleRadius;
+        if ((rect.height() - mBubbleRadius * 2) < mArrowHeight){
+            mArrowHeight = rect.height() - mBubbleRadius * 2;
             position = mBubbleRadius;
-            Log.e("++++++TAG", "+++++++++1++++++position" + position + "++++++++++mBubbleRadius:" + mBubbleRadius);
         }else {
             switch (mArrowRelative) {
                 case BEGIN:
                     position = mArrowPosition;
                     break;
                 case CENTER:
-                    position = rect.width() / 2 - mArrowWidth / 2;
+                    position = rect.height() / 2 - mArrowHeight / 2 + mArrowPosition;
+                    break;
+                case END:
+                    position = rect.bottom - mArrowPosition - mArrowHeight;
+                    break;
+                default:
+                    position = mBubbleRadius;
+                    break;
+            }
+            if (position < mBubbleRadius)
+                position = mBubbleRadius;
+            else if (position > (rect.height() - mBubbleRadius - mArrowHeight))
+                position = rect.height() - mBubbleRadius - mArrowHeight;
+        }
+
+        path.moveTo(rect.left + mArrowWidth + mBubbleRadius, rect.top);
+        path.lineTo(rect.right - mBubbleRadius, rect.top);
+        path.arcTo(new RectF(rect.right - mBubbleRadius * 2, rect.top, rect.right, rect.top + mBubbleRadius * 2), 270, 90);
+        path.lineTo(rect.right, rect.bottom - mBubbleRadius);
+        path.arcTo(new RectF(rect.right - mBubbleRadius * 2, rect.bottom - mBubbleRadius * 2, rect.right, rect.bottom), 0, 90);
+        path.lineTo(rect.left + mArrowWidth + mBubbleRadius, rect.bottom);
+        path.arcTo(new RectF(rect.left + mArrowWidth, rect.bottom - mBubbleRadius * 2, rect.left + mArrowWidth + mBubbleRadius * 2, rect.bottom), 90, 90);
+        path.lineTo(rect.left + mArrowWidth,  position + mArrowHeight);
+        path.lineTo(rect.left, position + mArrowHeight / 2);
+        path.lineTo(rect.left + mArrowWidth, position);
+        path.lineTo(rect.left + mArrowWidth, rect.top + mBubbleRadius);
+        path.arcTo(new RectF(rect.left + mArrowWidth, rect.top, rect.left + mArrowWidth + mBubbleRadius * 2 , rect.top + mBubbleRadius * 2), 180, 90);
+        path.close();
+    }
+
+    private void setUpTopPath(RectF rect, Path path) {
+        float position;
+        if ((rect.width() - mBubbleRadius * 2) < mArrowWidth){
+            mArrowWidth = rect.width() - mBubbleRadius * 2;
+            position = mBubbleRadius;
+        }else {
+            switch (mArrowRelative) {
+                case BEGIN:
+                    position = mArrowPosition;
+                    break;
+                case CENTER:
+                    position = rect.width() / 2 - mArrowWidth / 2 + mArrowPosition;
                     break;
                 case END:
                     position = rect.right - mArrowPosition - mArrowWidth;
@@ -171,8 +185,8 @@ public class BubbleDrawable extends Drawable {
                 position = mBubbleRadius;
             else if (position > (rect.width() - mBubbleRadius - mArrowWidth))
                 position = rect.width() - mBubbleRadius - mArrowWidth;
-
         }
+
         path.moveTo(rect.left + mBubbleRadius, rect.top + mArrowHeight);
         path.lineTo(rect.left + position, rect.top + mArrowHeight);
         path.lineTo(rect.left  + position + mArrowWidth / 2, rect.top);
@@ -190,66 +204,83 @@ public class BubbleDrawable extends Drawable {
 
     private void setUpRightPath(RectF rect, Path path) {
         float position;
-        if (mArrowRelative == ArrowRelative.BEGIN) {
-            position = mArrowPosition;
-        } else if (mArrowRelative == ArrowRelative.CENTER) {
-            position = (rect.bottom - rect.top) / 2 - mArrowHeight / 2;
-        } else if (mArrowRelative == ArrowRelative.END) {
-            position = rect.bottom - mArrowPosition - mArrowHeight;
+        if ((rect.height() - mBubbleRadius * 2) < mArrowHeight){
+            mArrowHeight = rect.height() - mBubbleRadius * 2;
+            position = mBubbleRadius;
+        }else {
+            switch (mArrowRelative) {
+                case BEGIN:
+                    position = mArrowPosition;
+                    break;
+                case CENTER:
+                    position = rect.height() / 2 - mArrowHeight / 2 + mArrowPosition;
+                    break;
+                case END:
+                    position = rect.bottom - mArrowPosition - mArrowHeight;
+                    break;
+                default:
+                    position = mBubbleRadius;
+                    break;
+            }
+            if (position < mBubbleRadius)
+                position = mBubbleRadius;
+            else if (position > (rect.height() - mBubbleRadius - mArrowHeight))
+                position = rect.height() - mBubbleRadius - mArrowHeight;
         }
 
         path.moveTo(rect.left + mBubbleRadius, rect.top);
-        path.lineTo(rect.width() - mBubbleRadius - mArrowWidth, rect.top);
-        path.arcTo(new RectF(rect.right - mBubbleRadius - mArrowWidth, rect.top,
-                rect.right - mArrowWidth, mBubbleRadius + rect.top), 270, 90);
-        path.lineTo(rect.right - mArrowWidth, mArrowPosition);
-        path.lineTo(rect.right, mArrowPosition + mArrowHeight / 2);
-        path.lineTo(rect.right - mArrowWidth, mArrowPosition + mArrowHeight);
+        path.lineTo(rect.right - mArrowWidth - mBubbleRadius, rect.top);
+        path.arcTo(new RectF(rect.right - mArrowWidth - mBubbleRadius * 2, rect.top, rect.right - mArrowWidth, rect.top + mBubbleRadius * 2), 270, 90);
+        path.lineTo(rect.right - mArrowWidth, position);
+        path.lineTo(rect.right, position + mArrowHeight / 2);
+        path.lineTo(rect.right - mArrowWidth, position + mArrowHeight);
         path.lineTo(rect.right - mArrowWidth, rect.bottom - mBubbleRadius);
-
-        path.arcTo(new RectF(rect.right - mBubbleRadius - mArrowWidth, rect.bottom - mBubbleRadius,
-                rect.right - mArrowWidth, rect.bottom), 0, 90);
-        path.lineTo(rect.left + mArrowWidth, rect.bottom);
-
-        path.arcTo(
-                new RectF(rect.left, rect.bottom - mBubbleRadius, mBubbleRadius + rect.left, rect.bottom),
-                90, 90);
-
-        path.arcTo(new RectF(rect.left, rect.top, mBubbleRadius + rect.left, mBubbleRadius + rect.top),
-                180, 90);
+        path.arcTo(new RectF(rect.right - mArrowWidth - mBubbleRadius * 2, rect.bottom - mBubbleRadius * 2, rect.right - mArrowWidth, rect.bottom), 0, 90);
+        path.lineTo(rect.left + mBubbleRadius, rect.bottom);
+        path.arcTo(new RectF(rect.left, rect.bottom - mBubbleRadius * 2, rect.left + mBubbleRadius * 2, rect.bottom), 90, 90);
+        path.lineTo(rect.left, rect.top + mBubbleRadius);
+        path.arcTo(new RectF(rect.left, rect.top, rect.left + mBubbleRadius * 2, rect.top + mBubbleRadius * 2), 180, 90);
         path.close();
     }
 
     private void setUpBottomPath(RectF rect, Path path) {
         float position;
-        if (mArrowRelative == ArrowRelative.BEGIN) {
-            position = mArrowPosition;
-        } else if (mArrowRelative == ArrowRelative.CENTER) {
-            position = (rect.right - rect.left) / 2 - mArrowWidth / 2;
-        } else if (mArrowRelative == ArrowRelative.END) {
-            position = rect.right - mArrowPosition - mArrowWidth;
+        if ((rect.width() - mBubbleRadius * 2) < mArrowWidth){
+            mArrowWidth = rect.width() - mBubbleRadius * 2;
+            position = mBubbleRadius;
+        }else {
+            switch (mArrowRelative) {
+                case BEGIN:
+                    position = mArrowPosition;
+                    break;
+                case CENTER:
+                    position = rect.width() / 2 - mArrowWidth / 2 + mArrowPosition;
+                    break;
+                case END:
+                    position = rect.right - mArrowPosition - mArrowWidth;
+                    break;
+                default:
+                    position = mBubbleRadius;
+                    break;
+            }
+            if (position < mBubbleRadius)
+                position = mBubbleRadius;
+            else if (position > (rect.width() - mBubbleRadius - mArrowWidth))
+                position = rect.width() - mBubbleRadius - mArrowWidth;
         }
 
         path.moveTo(rect.left + mBubbleRadius, rect.top);
-        path.lineTo(rect.width() - mBubbleRadius, rect.top);
-        path.arcTo(
-                new RectF(rect.right - mBubbleRadius, rect.top, rect.right, mBubbleRadius + rect.top), 270,
-                90);
-
+        path.lineTo(rect.right - mBubbleRadius, rect.top);
+        path.arcTo(new RectF(rect.right - mBubbleRadius * 2, rect.top, rect.right, rect.top + mBubbleRadius * 2), 270, 90);
         path.lineTo(rect.right, rect.bottom - mArrowHeight - mBubbleRadius);
-        path.arcTo(new RectF(rect.right - mBubbleRadius, rect.bottom - mBubbleRadius - mArrowHeight,
-                rect.right, rect.bottom - mArrowHeight), 0, 90);
-
-        path.lineTo(rect.left + mArrowWidth + mArrowPosition, rect.bottom - mArrowHeight);
-        path.lineTo(rect.left + mArrowPosition + mArrowWidth / 2, rect.bottom);
-        path.lineTo(rect.left + mArrowPosition, rect.bottom - mArrowHeight);
-        path.lineTo(rect.left + Math.min(mBubbleRadius, mArrowPosition), rect.bottom - mArrowHeight);
-
-        path.arcTo(new RectF(rect.left, rect.bottom - mBubbleRadius - mArrowHeight,
-                mBubbleRadius + rect.left, rect.bottom - mArrowHeight), 90, 90);
+        path.arcTo(new RectF(rect.right - mBubbleRadius * 2, rect.bottom - mArrowHeight - mBubbleRadius * 2, rect.right, rect.bottom - mArrowHeight), 0, 90);
+        path.lineTo(rect.left + position + mArrowWidth, rect.bottom - mArrowHeight);
+        path.lineTo(rect.left + position + mArrowWidth / 2, rect.bottom);
+        path.lineTo(rect.left + position, rect.bottom - mArrowHeight);
+        path.lineTo(rect.left + mBubbleRadius, rect.bottom - mArrowHeight);
+        path.arcTo(new RectF(rect.left, rect.bottom - mArrowHeight - mBubbleRadius * 2, rect.left + mBubbleRadius * 2, rect.bottom - mArrowHeight), 90, 90);
         path.lineTo(rect.left, rect.top + mBubbleRadius);
-        path.arcTo(new RectF(rect.left, rect.top, mBubbleRadius + rect.left, mBubbleRadius + rect.top),
-                180, 90);
+        path.arcTo(new RectF(rect.left, rect.top, rect.left + mBubbleRadius * 2 , rect.top + mBubbleRadius * 2), 180, 90);
         path.close();
     }
 
