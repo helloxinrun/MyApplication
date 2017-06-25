@@ -66,6 +66,36 @@ public interface BubbleViewAttrs {
     }
 
     /**
+     * 设置气泡背景类型
+     */
+    enum BubbleBgType {
+        COLOR(0x00), BITMAP(0x01);
+
+        private int mValue;
+
+        BubbleBgType(int value) {
+            this.mValue = value;
+        }
+
+        public static BubbleBgType mapIntToValue(int state) {
+            for (BubbleBgType value : BubbleBgType.values()) {
+                if (state == value.getValue()) {
+                    return value;
+                }
+            }
+            return getDefault();
+        }
+
+        public static BubbleBgType getDefault() {
+            return COLOR;
+        }
+
+        public int getValue() {
+            return mValue;
+        }
+    }
+
+    /**
      * 确定箭头的宽高
      *
      * @param arrowWidth
@@ -109,5 +139,23 @@ public interface BubbleViewAttrs {
     float getBubbleLeftBottomRadiu();
 
     float getBubbleRightBottomRadiu();
+
+    /**
+     * 确定气泡的背景颜色
+     *
+     * @param color
+     */
+    void setBubbleColor(int color);
+
+    int getBubbleColor();
+
+    /**
+     * 确定气泡的背景类型
+     *
+     * @param bubbleBgType
+     */
+    void setBubbleBgType(BubbleBgType bubbleBgType);
+
+    BubbleBgType getBubbleBgType();
 
 }
