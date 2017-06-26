@@ -184,7 +184,7 @@ public class BubbleViewImpl implements BubbleViewAttrs{
 
     public BubbleDrawable buildBubbleDrawable(int width, int height) {
         RectF rectF = new RectF(0, 0, width, height);
-        Log.e("+++++++++++++++++","++++++++++++++==============" + mView.getWidth()+ "==========="+mView.getHeight());
+        Log.e("TAG","==============" + mView.getWidth()+ "==========="+mView.getHeight());
         Bitmap bitmap = getBitmapFromDrawable(mContext, mView.getBackground(), mView.getWidth(), mView.getHeight(), 20);
         BubbleDrawable bubbleDrawable = new BubbleDrawable.Builder()
                     .rect(rectF)
@@ -208,7 +208,7 @@ public class BubbleViewImpl implements BubbleViewAttrs{
         return bubbleDrawable;
     }
 
-    public Bitmap getBitmapFromDrawable(Context mContext, Drawable drawable, int width, int height, int defaultSize) {
+    private Bitmap getBitmapFromDrawable(Context mContext, Drawable drawable, int width, int height, int defaultSize) {
         if (drawable == null) {
             return null;
         }
@@ -233,7 +233,7 @@ public class BubbleViewImpl implements BubbleViewAttrs{
         }
     }
 
-    public int dp2px(Context context, int dp) {
+    private int dp2px(Context context, int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 context.getResources().getDisplayMetrics());
     }
