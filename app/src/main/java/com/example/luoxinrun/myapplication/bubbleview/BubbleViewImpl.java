@@ -2,7 +2,15 @@ package com.example.luoxinrun.myapplication.bubbleview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.example.luoxinrun.myapplication.R;
@@ -23,8 +31,14 @@ public class BubbleViewImpl implements BubbleViewAttrs{
     private float mBubbleLeftBottomRadiu;
     private float mBubbleRightBottomRadiu;
     private int mBubbleColor;
+    private BubbleBgType mBubbleBgType;
+
+    private Context mContext;
+    private View mView;
 
     public void init(View view, Context context, AttributeSet attrs){
+        this.mView = view;
+        this.mContext = context;
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BubbleView);
             mArrowWidth = array.getDimension(R.styleable.BubbleView_arrowWidth,
@@ -39,16 +53,14 @@ public class BubbleViewImpl implements BubbleViewAttrs{
                     BubbleDrawable.Builder.DEFAULT_ARROW_POSITION);
             mBubbleRadius = array.getDimension(R.styleable.BubbleView_bubbleRadius,
                     BubbleDrawable.Builder.DEFAULT_BUBBLE_RADIU);
-            mBubbleLeftTopRadiu = array.getDimension(R.styleable.BubbleView_bubbleLeftTopRadiu,
-                    BubbleDrawable.Builder.DEFAULT_BUBBLE_RADIU);
-            mBubbleRightTopRadiu = array.getDimension(R.styleable.BubbleView_bubbleRightTopRadiu,
-                    BubbleDrawable.Builder.DEFAULT_BUBBLE_RADIU);
-            mBubbleLeftBottomRadiu = array.getDimension(R.styleable.BubbleView_bubbleLeftBottomRadiu,
-                    BubbleDrawable.Builder.DEFAULT_BUBBLE_RADIU);
-            mBubbleRightBottomRadiu = array.getDimension(R.styleable.BubbleView_bubbleRightBottomRadiu,
-                    BubbleDrawable.Builder.DEFAULT_BUBBLE_RADIU);
+            mBubbleLeftTopRadiu = array.getDimension(R.styleable.BubbleView_bubbleLeftTopRadiu, mBubbleRadius);
+            mBubbleRightTopRadiu = array.getDimension(R.styleable.BubbleView_bubbleRightTopRadiu, mBubbleRadius);
+            mBubbleLeftBottomRadiu = array.getDimension(R.styleable.BubbleView_bubbleLeftBottomRadiu, mBubbleRadius);
+            mBubbleRightBottomRadiu = array.getDimension(R.styleable.BubbleView_bubbleRightBottomRadiu, mBubbleRadius);
             mBubbleColor = array.getColor(R.styleable.BubbleView_bubbleColor,
                     BubbleDrawable.Builder.DEFAULT_BUBBLE_COLOR);
+            int type = array.getInt(R.styleable.BubbleView_bubbleBgType, 0);
+            mBubbleBgType = BubbleBgType.mapIntToValue(type);
             array.recycle();
         }
         setUpPadding(view);
@@ -150,4 +162,79 @@ public class BubbleViewImpl implements BubbleViewAttrs{
         return mBubbleLeftBottomRadiu;
     }
 
+    @Override
+    public void setBubbleColor(int color) {
+        this.mBubbleColor = color;
+    }
+
+    @Override
+    public int getBubbleColor() {
+        return mBubbleColor;
+    }
+
+    @Override
+    public void setBubbleBgType(BubbleBgType bubbleBgType) {
+        this.mBubbleBgType = bubbleBgType;
+    }
+
+    @Override
+    public BubbleBgType getBubbleBgType() {
+        return mBubbleBgType;
+    }
+
+    public BubbleDrawable buildBubbleDrawable(int width, int height) {
+        RectF rectF = new RectF(0, 0, width, height);
+        Log.e("+++++++++++++++++","++++++++++++++==============" + mView.getWidth()+ "==========="+mView.getHeight());
+        Bitmap bitmap = getBitmapFromDrawable(mContext, mView.getBackground(), mView.getWidth(), mView.getHeight(), 20);
+        BubbleDrawable bubbleDrawable = new BubbleDrawable.Builder()
+                    .rect(rectF)
+                    .bubbleType(mBubbleBgType)
+                    .arrowWidth(mArrowWidth)
+                    .arrowHeight(mArrowHeight)
+                    .arrowLocation(mArrowLocation)
+                    .arrowRelative(mArrowRelative)
+                    .arrowPosition(mArrowPosition)
+                    .bubbleRadius(mBubbleRadius)
+                    .bubbleRadius(mBubbleLeftTopRadiu, mBubbleRightTopRadiu, mBubbleLeftBottomRadiu, mBubbleRightBottomRadiu)
+                    .bubbleColor(mBubbleColor)
+                    .bubbleBitmap(bitmap)
+                    .build();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mView.setBackground(bubbleDrawable);
+        } else {
+            // noinspection deprecation
+            mView.setBackgroundDrawable(bubbleDrawable);
+        }
+        return bubbleDrawable;
+    }
+
+    public Bitmap getBitmapFromDrawable(Context mContext, Drawable drawable, int width, int height, int defaultSize) {
+        if (drawable == null) {
+            return null;
+        }
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+        try {
+            Bitmap bitmap;
+            if (width > 0 && height > 0){
+                bitmap = Bitmap.createBitmap(width,
+                        height, Bitmap.Config.ARGB_8888);
+            }else{
+                bitmap = Bitmap.createBitmap(dp2px(mContext, defaultSize),
+                        dp2px(mContext, defaultSize), Bitmap.Config.ARGB_8888);
+            }
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        } catch (OutOfMemoryError e) {
+            return null;
+        }
+    }
+
+    public int dp2px(Context context, int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                context.getResources().getDisplayMetrics());
+    }
 }

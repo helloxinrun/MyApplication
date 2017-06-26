@@ -21,5 +21,9 @@
             <enum name="center" value="0x01"/>
             <enum name="end" value="0x02"/>
         </attr>
+        <attr name="bubbleBgType" format="enum">
+            <enum name="color" value="0x00"/>
+            <enum name="bitmap" value="0x01"/>
+        </attr>
     </declare-styleable>
 </resources>

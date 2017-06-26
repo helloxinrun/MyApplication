@@ -17,8 +17,10 @@
 
             <com.example.luoxinrun.myapplication.bubbleview.BubbleTextView
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/mine_bg"
                 android:layout_marginTop="20dp"
+                android:padding="60dp"
                 android:gravity="center"
                 android:text="111111111111dfasgr"
                 app:arrowHeight="130dp"
@@ -27,11 +29,15 @@
                 app:arrowRelative="center"
                 app:arrowWidth="20dp"
                 app:bubbleColor="#7eeea7"
-                app:bubbleRadius="25dp" />
+                app:bubbleRadius="25dp"
+                app:bubbleLeftTopRadiu="50dp"
+                app:bubbleBgType="color"
+                />
 
             <com.example.luoxinrun.myapplication.bubbleview.BubbleLinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
+                android:background="@mipmap/mine_bg"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="10dp"
@@ -41,7 +47,9 @@
                 app:arrowRelative="begin"
                 app:arrowWidth="20dp"
                 app:bubbleColor="#de0cdede"
-                app:bubbleRadius="25dp">
+                app:bubbleRadius="25dp"
+                app:bubbleBgType="bitmap"
+                >
 
                 <ImageView
                     android:layout_width="30dp"
@@ -60,7 +68,7 @@
 
         <com.example.luoxinrun.myapplication.bubbleview.BubbleImageView
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@mipmap/mine_bg"
             app:arrowWidth="20dp"
@@ -69,7 +77,9 @@
             app:arrowPosition="0dp"
             app:bubbleColor="#7EC0EE"
             app:arrowRelative="center"
-            app:bubbleRadius="25dp" />
+            app:bubbleRadius="25dp"
+            app:bubbleBgType="color"
+            />
 
     </LinearLayout>
 

@@ -32,7 +32,7 @@ public class BubbleDrawable extends Drawable {
 
     private int mBubbleColor;
     private Bitmap mBubbleBitmap;
-    private BubbleType mBubbleType;
+    private BubbleViewAttrs.BubbleBgType mBubbleBgType;
 
     private BubbleDrawable(Builder builder) {
         this.mRect = builder.mRect;
@@ -50,7 +50,7 @@ public class BubbleDrawable extends Drawable {
 
         this.mBubbleColor = builder.mBubbleColor;
         this.mBubbleBitmap = builder.mBubbleBitmap;
-        this.mBubbleType = builder.mBubbleType;
+        this.mBubbleBgType = builder.mBubbleBgType;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class BubbleDrawable extends Drawable {
     }
 
     private void setUp(Canvas canvas) {
-        switch (mBubbleType) {
+        switch (mBubbleBgType) {
             case COLOR:
                 mPaint.setColor(mBubbleColor);
                 break;
@@ -322,7 +322,7 @@ public class BubbleDrawable extends Drawable {
 
         private int mBubbleColor = DEFAULT_BUBBLE_COLOR;
         private Bitmap mBubbleBitmap;
-        private BubbleType mBubbleType = BubbleType.COLOR;
+        private BubbleViewAttrs.BubbleBgType mBubbleBgType = BubbleViewAttrs.BubbleBgType.COLOR;
 
         public Builder rect(RectF rect) {
             this.mRect = rect;
@@ -372,18 +372,16 @@ public class BubbleDrawable extends Drawable {
 
         public Builder bubbleColor(int bubbleColor) {
             this.mBubbleColor = bubbleColor;
-            bubbleType(BubbleType.COLOR);
             return this;
         }
 
         public Builder bubbleBitmap(Bitmap bubbleBitmap) {
             this.mBubbleBitmap = bubbleBitmap;
-            bubbleType(BubbleType.BITMAP);
             return this;
         }
 
-        public Builder bubbleType(BubbleType bubbleType) {
-            this.mBubbleType = bubbleType;
+        public Builder bubbleType(BubbleViewAttrs.BubbleBgType bubbleType) {
+            this.mBubbleBgType = bubbleType;
             return this;
         }
 
@@ -395,61 +393,5 @@ public class BubbleDrawable extends Drawable {
         }
     }
 
-//    public enum ArrowLocation {
-//        LEFT(0x00), RIGHT(0x01), TOP(0x02), BOTTOM(0x03);
-//
-//        private int mValue;
-//
-//        ArrowLocation(int value) {
-//            this.mValue = value;
-//        }
-//
-//        public static ArrowLocation mapIntToValue(int stateInt) {
-//            for (ArrowLocation value : ArrowLocation.values()) {
-//                if (stateInt == value.getValue()) {
-//                    return value;
-//                }
-//            }
-//            return getDefault();
-//        }
-//
-//        public static ArrowLocation getDefault() {
-//            return LEFT;
-//        }
-//
-//        public int getValue() {
-//            return mValue;
-//        }
-//    }
-//
-//    public enum ArrowRelative {
-//        BEGIN(0x00), CENTER(0x01), END(0x02);
-//
-//        private int mValue;
-//
-//        ArrowRelative(int value) {
-//            this.mValue = value;
-//        }
-//
-//        public static ArrowRelative mapIntToValue(int stateInt) {
-//            for (ArrowRelative value : ArrowRelative.values()) {
-//                if (stateInt == value.getValue()) {
-//                    return value;
-//                }
-//            }
-//            return getDefault();
-//        }
-//
-//        public static ArrowRelative getDefault() {
-//            return BEGIN;
-//        }
-//
-//        public int getValue() {
-//            return mValue;
-//        }
-//    }
 
-    public enum BubbleType {
-        COLOR, BITMAP
-    }
 }
