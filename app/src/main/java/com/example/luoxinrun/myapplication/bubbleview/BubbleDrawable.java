@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 public class BubbleDrawable extends Drawable {
     private RectF mRect;
@@ -36,21 +37,51 @@ public class BubbleDrawable extends Drawable {
 
     private BubbleDrawable(Builder builder) {
         this.mRect = builder.mRect;
-
-        this.mArrowWidth = builder.mArrowWidth;
-        this.mArrowHeight = builder.mArrowHeight;
         this.mArrowLocation = builder.mArrowLocation;
         this.mArrowRelative = builder.mArrowRelative;
         this.mArrowPosition = builder.mArrowPosition;
-
-        this.mBubbleLeftTopRadiu = builder.mBubbleLeftTopRadiu;
-        this.mBubbleRightTopRadiu = builder.mBubbleRightTopRadiu;
-        this.mBubbleLeftBottomRadiu = builder.mBubbleLeftBottomRadiu;
-        this.mBubbleRightBottomRadiu = builder.mBubbleRightBottomRadiu;
-
+        this.mArrowWidth = limitWidthHeight(builder.mArrowWidth, mRect.width());
+        this.mArrowHeight = limitWidthHeight(builder.mArrowHeight, mRect.height());
+        this.mBubbleLeftTopRadiu = limitRadius(builder.mBubbleLeftTopRadiu, mRect.width(), mRect.height());
+        this.mBubbleRightTopRadiu = limitRadius(builder.mBubbleRightTopRadiu, mRect.width(), mRect.height());
+        this.mBubbleLeftBottomRadiu = limitRadius(builder.mBubbleLeftBottomRadiu, mRect.width(), mRect.height());
+        this.mBubbleRightBottomRadiu = limitRadius(builder.mBubbleRightBottomRadiu, mRect.width(), mRect.height());
         this.mBubbleColor = builder.mBubbleColor;
         this.mBubbleBitmap = builder.mBubbleBitmap;
         this.mBubbleBgType = builder.mBubbleBgType;
+    }
+
+    private float limitWidthHeight(float num, float maxNum){
+        if (num < 0){
+            num = 0;
+        }else if (num > maxNum){
+            num = maxNum;
+        }
+        return num;
+    }
+
+    private float limitRadius(float radiu, float width, float height){
+        Log.e("TAG","===radiu"+radiu+"===width"+width+"===height"+height+"===mArrowWidth"+mArrowWidth+"===mArrowHeight"+mArrowHeight);
+        if (radiu < 0){
+            radiu = 0;
+        }else {
+            float offset;
+            switch (mArrowLocation) {
+                case LEFT:
+                case RIGHT:
+                    offset = Math.min(width - mArrowWidth, height) / 2;
+                    if (radiu > offset)
+                        radiu = offset;
+                    break;
+                case TOP:
+                case BOTTOM:
+                    offset = Math.min(width , height - mArrowHeight) / 2;
+                    if (radiu > offset)
+                        radiu = offset;
+                    break;
+            }
+        }
+        return radiu;
     }
 
     @Override
