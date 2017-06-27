@@ -252,8 +252,8 @@ public class BubbleDrawable extends Drawable {
 
     private void setBottomPath(RectF rect, Path path) {
         float position;
-        if ((rect.width() - (mBubbleLeftBottomRadiu +mBubbleRightBottomRadiu)) < mArrowWidth){
-            mArrowWidth = rect.width() - (mBubbleLeftBottomRadiu +mBubbleRightBottomRadiu);
+        if ((rect.width() - (mBubbleLeftBottomRadiu + mBubbleRightBottomRadiu)) < mArrowWidth){
+            mArrowWidth = rect.width() - (mBubbleLeftBottomRadiu + mBubbleRightBottomRadiu);
             position = mBubbleLeftBottomRadiu;
         }else {
             switch (mArrowRelative) {

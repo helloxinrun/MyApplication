@@ -63,29 +63,7 @@ public class BubbleViewImpl implements BubbleViewAttrs{
             mBubbleBgType = BubbleBgType.mapIntToValue(type);
             array.recycle();
         }
-        setUpPadding(view);
-    }
-
-    private void setUpPadding(View view) {
-        int left = view.getPaddingLeft();
-        int right = view.getPaddingRight();
-        int top = view.getPaddingTop();
-        int bottom = view.getPaddingBottom();
-        switch (mArrowLocation) {
-            case LEFT:
-                left += mArrowWidth;
-                break;
-            case RIGHT:
-                right += mArrowWidth;
-                break;
-            case TOP:
-                top += mArrowHeight;
-                break;
-            case BOTTOM:
-                bottom += mArrowHeight;
-                break;
-        }
-        view.setPadding(left, top, right, bottom);
+//        setUpPadding(mView);
     }
 
     @Override
@@ -183,8 +161,17 @@ public class BubbleViewImpl implements BubbleViewAttrs{
     }
 
     public BubbleDrawable buildBubbleDrawable(int width, int height) {
+        Log.e("TAG","==============width：" + width+ "===========height："+height);
+        mArrowWidth = limitWidthHeight(mArrowWidth, width);
+        mArrowHeight = limitWidthHeight(mArrowHeight, height);
+        mBubbleRadius = limitRadius(mBubbleRadius, width, height);
+        mBubbleLeftTopRadiu = limitRadius(mBubbleLeftTopRadiu, width, height);
+        mBubbleRightTopRadiu = limitRadius(mBubbleRightTopRadiu, width, height);
+        mBubbleLeftBottomRadiu = limitRadius(mBubbleLeftBottomRadiu, width, height);
+        mBubbleRightBottomRadiu = limitRadius(mBubbleRightBottomRadiu, width, height);
+        setUpPadding(mView);
         RectF rectF = new RectF(0, 0, width, height);
-        Log.e("TAG","==============" + mView.getWidth()+ "==========="+mView.getHeight());
+        Log.e("TAG","===========ArrowWidth:"+mArrowWidth + "==============ArrowHeight:" + mArrowHeight);
         Bitmap bitmap = getBitmapFromDrawable(mContext, mView.getBackground(), mView.getWidth(), mView.getHeight(), 20);
         BubbleDrawable bubbleDrawable = new BubbleDrawable.Builder()
                     .rect(rectF)
@@ -237,4 +224,60 @@ public class BubbleViewImpl implements BubbleViewAttrs{
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 context.getResources().getDisplayMetrics());
     }
+
+    private float limitWidthHeight(float num, float maxNum){
+        if (num < 0){
+            num = 0;
+        }else if (num > maxNum){
+            num = maxNum;
+        }
+        return num;
+    }
+
+    private float limitRadius(float radiu, float width, float height){
+        if (radiu < 0){
+            radiu = 0;
+        }else {
+            float offset;
+            switch (mArrowLocation) {
+                case LEFT:
+                case RIGHT:
+                    offset = (Math.min(width , height) - mArrowWidth) / 2;
+                    if (radiu > offset)
+                        radiu = offset;
+                    break;
+                case TOP:
+                case BOTTOM:
+                    offset = (Math.min(width , height) - mArrowHeight) / 2;
+                    if (radiu > offset)
+                        radiu = offset;
+                    break;
+            }
+        }
+        return radiu;
+    }
+
+    private void setUpPadding(View view) {
+        int left = view.getPaddingLeft();
+        int right = view.getPaddingRight();
+        int top = view.getPaddingTop();
+        int bottom = view.getPaddingBottom();
+        switch (mArrowLocation) {
+            case LEFT:
+                left += mArrowWidth;
+                break;
+            case RIGHT:
+                right += mArrowWidth;
+                break;
+            case TOP:
+                top += mArrowHeight;
+                break;
+            case BOTTOM:
+                bottom += mArrowHeight;
+                break;
+        }
+        Log.e("TAG","=====left:" + left + "======top:" + top + "=====right:" + right + "=====bottom:" + bottom);
+        view.setPadding(left, top, right, bottom);
+    }
+
 }
