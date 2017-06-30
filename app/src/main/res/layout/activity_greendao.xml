@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <data>
         <variable
@@ -11,26 +13,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请输入："
+                />
+
+            <EditText
+                android:id="@+id/et"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="确定"
+                android:onClick="@{()->presenter.onSubmit()}"
+                />
+
+        </LinearLayout>
+
+        <com.example.luoxinrun.myapplication.bubbleview.BubbleImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="请输入："
-            />
-
-        <EditText
-            android:id="@+id/et"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="确定"
-            android:onClick="@{()->presenter.onSubmit()}"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/test"
+            app:arrowWidth="100dp"
+            app:arrowHeight="10dp"
+            app:arrowLocation="right"
+            app:bubbleColor="#7EC0EE"
+            app:arrowRelative="center"
+            app:bubbleRadius="25dp"
+            app:bubbleBgType="bitmap"
+            android:visibility="visible"
             />
 
     </LinearLayout>
