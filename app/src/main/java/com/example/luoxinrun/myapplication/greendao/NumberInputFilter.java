@@ -8,23 +8,23 @@ import android.util.Log;
  * Created by luoxinrun on 2017/6/29.
  */
 
-public class InputFilterMinMax implements InputFilter {
+public class NumberInputFilter implements InputFilter {
 
   private float min = -1f, max = -1f; // 限定最大最小值
   private int precision = 0; // 限定位数
 
   private int count; // 记录小数点个数
 
-  public InputFilterMinMax(int precision) {
+  public NumberInputFilter(int precision) {
     this.precision = precision;
   }
 
-  public InputFilterMinMax minValue(float min) {
+  public NumberInputFilter minValue(float min) {
     this.min = min;
     return this;
   }
 
-  public InputFilterMinMax maxValue(float max) {
+  public NumberInputFilter maxValue(float max) {
     this.max = max;
     return this;
   }
