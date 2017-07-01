@@ -45,7 +45,7 @@ public class NumberInputFilter implements InputFilter {
     }
 
     String s = spliceStr(source, dest, dstart, dend);
-    Log.e("TAG", "=======================spliceStr:" + s);
+   // Log.e("TAG", "=======================spliceStr:" + s);
 
     // 最多只能有一个"."和保留"."后的固定位数
     count = 0;

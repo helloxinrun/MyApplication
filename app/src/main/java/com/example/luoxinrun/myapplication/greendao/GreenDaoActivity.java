@@ -8,7 +8,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Toast;
@@ -27,22 +26,22 @@ public class GreenDaoActivity extends BaseActivity {
   protected void initComponent() {
     mBinding = DataBindingUtil.setContentView(this, R.layout.activity_greendao);
     mBinding.setPresenter(new Presenter());
-    mBinding.et.setFilters(new InputFilter[]{new InputFilterMinMax(2).maxValue(999999.99f)});
+    mBinding.et.setFilters(new InputFilter[]{new NumberInputFilter(2).maxValue(999999.99f)});
     mBinding.et.addTextChangedListener(new TextWatcher() {
       @Override
       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        Log.e("TAG","=======beforeTextChanged:"+s+"==========start:"+start+"==========after:"+after+"=========count:"+count);
 
       }
 
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count) {
-        //s:edittext显示的内容，start:字符添加起始位置，字符减少后的起始位置。before:字符添加时始终为0，字符减少时表示减少的个数。count:字符添加时表示增加的个数，字符减少时始终为0。
         Log.e("TAG","=======onTextChange:"+s+"==========start:"+start+"==========before:"+before+"=========count:"+count);
       }
 
       @Override
       public void afterTextChanged(Editable s) {
-
+        Log.e("TAG","=======afterTextChanged:"+s);
       }
     });
   }
