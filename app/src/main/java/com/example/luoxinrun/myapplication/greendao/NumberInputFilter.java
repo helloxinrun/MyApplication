@@ -97,7 +97,7 @@ public class NumberInputFilter implements InputFilter {
         return "";
       }
     }
-
+    
     // // 最多只能有一个点和保留小数点后的固定位数
     // String dValue = dest.toString();
     // if (dValue.indexOf(".") != -1) {
