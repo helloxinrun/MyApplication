@@ -2,6 +2,7 @@ package com.example.luoxinrun.myapplication;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,6 +19,7 @@ public class MainActivity extends BaseActivity {
   protected void initComponent() {
     mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
     mBinding.setPresenter(new Presenter());
+    mBinding.gradientTv.setColors(new int[]{Color.parseColor("#FF4040"), Color.parseColor("#FFC125")}).updateView();
   }
 
   @Override
