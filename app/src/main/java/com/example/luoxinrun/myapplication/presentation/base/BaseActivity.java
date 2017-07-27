@@ -1,4 +1,4 @@
-package com.example.luoxinrun.myapplication;
+package com.example.luoxinrun.myapplication.presentation.base;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;

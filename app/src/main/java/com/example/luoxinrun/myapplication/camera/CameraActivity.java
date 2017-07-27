@@ -1,6 +1,6 @@
 package com.example.luoxinrun.myapplication.camera;
 
-import com.example.luoxinrun.myapplication.BaseActivity;
+import com.example.luoxinrun.myapplication.presentation.base.BaseActivity;
 import com.example.luoxinrun.myapplication.R;
 import com.example.luoxinrun.myapplication.databinding.ActivityCameraBinding;
 

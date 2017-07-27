@@ -5,7 +5,7 @@
 
         <variable
             name="presenter"
-            type="com.example.luoxinrun.myapplication.MainActivity.Presenter" />
+            type="com.example.luoxinrun.myapplication.presentation.main.MainActivity.Presenter" />
 
     </data>
 
@@ -19,10 +19,8 @@
             android:id="@+id/gradient_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="50dp"
-            android:text="zheshiy这是一个测试数据测试字体颜色是否会进行渐变，测试测试测试"
-            android:textSize="28sp"
-            />
+            android:text="Welcome to my demo."
+            android:textSize="14sp" />
 
         <Button
             android:layout_width="match_parent"
@@ -47,6 +45,12 @@
             android:layout_height="50dp"
             android:onClick="@{presenter.bubbleClick}"
             android:text="BubbleView" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:onClick="@{presenter.rePluginClick}"
+            android:text="RePlugin" />
 
     </LinearLayout>
 

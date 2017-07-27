@@ -2,6 +2,8 @@ package com.example.luoxinrun.myapplication;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -44,7 +46,9 @@ public class CalculateTest {
   @Test
   public void add() throws Exception {
     Calculate calculate = mock(Calculate.class);
-    Mockito.mockingDetails(calculate).isMock();
+    calculate.add(1,2);
+    calculate.add(1,2);
+    verify(calculate, timeout(100).times(2)).add(1,2);
   }
 
   @Test

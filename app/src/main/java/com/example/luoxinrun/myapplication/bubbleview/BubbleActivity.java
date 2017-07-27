@@ -3,7 +3,7 @@ package com.example.luoxinrun.myapplication.bubbleview;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
-import com.example.luoxinrun.myapplication.BaseActivity;
+import com.example.luoxinrun.myapplication.presentation.base.BaseActivity;
 import com.example.luoxinrun.myapplication.R;
 
 /**

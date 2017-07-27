@@ -1,16 +1,19 @@
-package com.example.luoxinrun.myapplication;
+package com.example.luoxinrun.myapplication.presentation.main;
+
+import com.example.luoxinrun.myapplication.R;
+import com.example.luoxinrun.myapplication.bubbleview.BubbleActivity;
+import com.example.luoxinrun.myapplication.camera.PhotoDisplayActivity;
+import com.example.luoxinrun.myapplication.databinding.ActivityMainBinding;
+import com.example.luoxinrun.myapplication.greendao.GreenDaoActivity;
+import com.example.luoxinrun.myapplication.presentation.base.BaseActivity;
+import com.example.luoxinrun.myapplication.replugin.RePluginActivity;
+import com.example.luoxinrun.myapplication.rxbus.RxBusActivity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-
-import com.example.luoxinrun.myapplication.bubbleview.BubbleActivity;
-import com.example.luoxinrun.myapplication.camera.PhotoDisplayActivity;
-import com.example.luoxinrun.myapplication.databinding.ActivityMainBinding;
-import com.example.luoxinrun.myapplication.greendao.GreenDaoActivity;
-import com.example.luoxinrun.myapplication.rxbus.RxBusActivity;
 
 public class MainActivity extends BaseActivity {
   private ActivityMainBinding mBinding;
@@ -45,5 +48,8 @@ public class MainActivity extends BaseActivity {
       startActivity(new Intent(MainActivity.this, BubbleActivity.class));
     }
 
+    public void rePluginClick(View view) {
+      startActivity(new Intent(MainActivity.this, RePluginActivity.class));
+    }
   }
 }
