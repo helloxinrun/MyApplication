@@ -52,6 +52,12 @@
             android:onClick="@{presenter.rePluginClick}"
             android:text="RePlugin" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:onClick="@{presenter.fragmentsClick}"
+            android:text="Fragments" />
+
     </LinearLayout>
 
 </layout>

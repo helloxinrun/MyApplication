@@ -6,6 +6,7 @@ import com.example.luoxinrun.myapplication.camera.PhotoDisplayActivity;
 import com.example.luoxinrun.myapplication.databinding.ActivityMainBinding;
 import com.example.luoxinrun.myapplication.greendao.GreenDaoActivity;
 import com.example.luoxinrun.myapplication.presentation.base.BaseActivity;
+import com.example.luoxinrun.myapplication.presentation.modules.fragsments.FragmentsActiviry;
 import com.example.luoxinrun.myapplication.replugin.RePluginActivity;
 import com.example.luoxinrun.myapplication.rxbus.RxBusActivity;
 
@@ -50,6 +51,10 @@ public class MainActivity extends BaseActivity {
 
     public void rePluginClick(View view) {
       startActivity(new Intent(MainActivity.this, RePluginActivity.class));
+    }
+
+    public void fragmentsClick(View view) {
+      startActivity(new Intent(MainActivity.this, FragmentsActiviry.class));
     }
   }
 }
