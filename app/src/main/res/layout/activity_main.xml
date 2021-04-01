@@ -1,65 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_margin">
 
-    <data>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name" />
 
-        <variable
-            name="presenter"
-            type="com.example.luoxinrun.myapplication.presentation.main.MainActivity.Presenter" />
+</LinearLayout>
 
-    </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_margin">
 
-        <com.example.luoxinrun.myapplication.widget.GradientTextView
-            android:id="@+id/gradient_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Welcome to my demo."
-            android:textSize="14sp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:onClick="@{presenter.rxBusClick}"
-            android:text="RxBus" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:onClick="@{presenter.greenDaoClick}"
-            android:text="GreenDao" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:onClick="@{presenter.cameraClick}"
-            android:text="Camera" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:onClick="@{presenter.bubbleClick}"
-            android:text="BubbleView" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:onClick="@{presenter.rePluginClick}"
-            android:text="RePlugin" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:onClick="@{presenter.fragmentsClick}"
-            android:text="Fragments" />
-
-    </LinearLayout>
-
-</layout>
 
 

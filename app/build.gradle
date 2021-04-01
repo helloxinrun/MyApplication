@@ -1,15 +1,19 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+
     defaultConfig {
-        applicationId "com.example.luoxinrun.myapplication"
-        minSdkVersion 15
-        targetSdkVersion 25
+        applicationId "com.ixinrun.myapp"
+        minSdkVersion 18
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -21,38 +25,15 @@ android {
     dataBinding {
         enabled = true
     }
-
-    /**
-     *360 replugin
-     */
-    apply plugin: 'replugin-host-gradle'
-    repluginHostConfig {
-
-        /**
-         * 是否使用 AppCompat 库
-         * 不需要个性化配置时，无需添加
-         */
-        useAppCompat = true
-        /**
-         * 背景不透明的坑的数量
-         * 不需要个性化配置时，无需添加
-         */
-        countNotTranslucentStandard = 6
-        countNotTranslucentSingleTop = 2
-        countNotTranslucentSingleTask = 3
-        countNotTranslucentSingleInstance = 2
-    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.1.6'
-    compile 'com.qihoo360.replugin:replugin-host-lib:2.1.6'
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.+'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation project(':app_base')
 }
