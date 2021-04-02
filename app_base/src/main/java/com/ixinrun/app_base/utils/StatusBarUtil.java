@@ -12,14 +12,18 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.IntRange;
 
 /**
- * 状态栏工具
+ * 描述：状态栏工具
+ * </p>
+ *
+ * @author : ixinrun
+ * @date : 2018/12/24
  */
-public class StatusBarUtil {
+public final class StatusBarUtil {
 
     /**
      * 设置状态栏全透明
      *
-     * @param activity
+     * @param activity 上下文
      */
     public static void immersive(Activity activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -38,8 +42,8 @@ public class StatusBarUtil {
     /**
      * 设置状态栏颜色
      *
-     * @param activity
-     * @param color
+     * @param activity 上下文
+     * @param color    颜色
      */
     public static void immersive(Activity activity, int color) {
         immersive(activity, color, 0);
@@ -48,8 +52,8 @@ public class StatusBarUtil {
     /**
      * 设置状态栏颜色
      *
-     * @param activity
-     * @param color
+     * @param activity 上下文
+     * @param color    颜色
      * @param alpha    透明度
      */
     public static void immersive(Activity activity, int color, @IntRange(from = 0, to = 255) int alpha) {
@@ -65,7 +69,7 @@ public class StatusBarUtil {
     /**
      * 设置状态栏主题
      *
-     * @param activity
+     * @param activity    上下文
      * @param isLightMode true 白色主题深色文字；false 深色主题白色问题
      */
     public static void lightMode(Activity activity, boolean isLightMode) {
@@ -103,7 +107,12 @@ public class StatusBarUtil {
         return 0xff << 24 | red << 16 | green << 8 | blue;
     }
 
-    private static int getStatusBarHeight() {
+    /**
+     * 获取状态栏高度
+     *
+     * @return 状态栏高度
+     */
+    public static int getStatusBarHeight() {
         Resources resources = Resources.getSystem();
         int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
         return resources.getDimensionPixelSize(resourceId);

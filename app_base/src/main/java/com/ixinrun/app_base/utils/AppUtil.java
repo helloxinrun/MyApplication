@@ -11,9 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * app基础工具，中间件角色
+ * 描述：app基础工具，中间件角色
+ * </p>
+ *
+ * @author : ixinrun
+ * @date : 2018/12/24
  */
-public class AppUtil {
+public final class AppUtil {
     private static Application sApp;
 
     private AppUtil() {
@@ -23,7 +27,7 @@ public class AppUtil {
     /**
      * 初始化
      *
-     * @param app
+     * @param app application上下文
      */
     public static void init(final Application app) {
         if (app == null) {
@@ -39,7 +43,7 @@ public class AppUtil {
     /**
      * 获取主进程
      *
-     * @return
+     * @return 返回当前进程application上下文
      */
     public static Application getApp() {
         if (sApp == null) {
@@ -50,6 +54,8 @@ public class AppUtil {
 
     /**
      * 获取应用程序名称
+     *
+     * @return app名称
      */
     public static String getAppName() {
         try {
@@ -64,6 +70,8 @@ public class AppUtil {
 
     /**
      * 获取应用程序版本名称
+     *
+     * @return 版本名称
      */
     public static String getVersionName() {
         try {
@@ -79,6 +87,8 @@ public class AppUtil {
 
     /**
      * 获取应用程序版本code
+     *
+     * @return 版本号
      */
     public static int getVersionCode() {
         try {
@@ -103,7 +113,7 @@ public class AppUtil {
     /**
      * 注册前后台切换监听
      *
-     * @param callback
+     * @param callback 监听回调
      */
     public static void addForegroundCallback(LifecycleCallbacks.OnForegroundCallback callback) {
         LifecycleCallbacks.INSTANCE.addForegroundCallback(callback);
@@ -121,7 +131,7 @@ public class AppUtil {
         /**
          * 注册生命周期回调
          *
-         * @param app
+         * @param app 上下文
          */
         void register(Application app) {
             app.registerActivityLifecycleCallbacks(INSTANCE);
@@ -130,7 +140,7 @@ public class AppUtil {
         /**
          * 解注册生命周期回调
          *
-         * @param app
+         * @param app 上下文
          */
         void unRegister(Application app) {
             app.unregisterActivityLifecycleCallbacks(INSTANCE);
@@ -186,7 +196,7 @@ public class AppUtil {
         /**
          * 注册前后台切换监听
          *
-         * @param callback
+         * @param callback 监听回调
          */
         void addForegroundCallback(OnForegroundCallback callback) {
             mOnForegroundCallbacks.add(callback);
@@ -199,7 +209,7 @@ public class AppUtil {
             /**
              * 前后台切换回调
              *
-             * @param isForeground
+             * @param isForeground 是否处于前台
              */
             void callback(boolean isForeground);
         }
