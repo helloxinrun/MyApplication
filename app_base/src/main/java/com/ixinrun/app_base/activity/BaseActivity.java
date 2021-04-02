@@ -18,7 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
+    /**
+     * activity唯一标识
+     */
     protected final String TAG = this.getClass().getName();
+
+    /**
+     * Context上下文
+     */
     protected Activity mContext;
 
     private boolean mKeyboardAutoHide = true;
@@ -29,35 +36,29 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        initBeforeContent();
-        setContentView(getContentView());
-        initAfterContent();
-
-        initComponent();
-        initEventHandlers();
+        initBase();
+        initView();
+        initEvent();
         loadData(savedInstanceState);
     }
 
     /**
-     * setContentView之前设定
+     * 初始化设定view之前的相关操作
      */
-    protected void initBeforeContent() {
-        // 如果使用沉浸式状态栏
+    protected void initBase() {
         if (isTranslucentStatusBar()) {
-            makeStatusBarTransparent(this);
+            translucentStatusBar();
         }
     }
 
     /**
-     * 状态栏透明
-     *
-     * @param activity
+     * 沉浸式状态栏
      */
-    private void makeStatusBarTransparent(Activity activity) {
+    private void translucentStatusBar() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return;
         }
-        Window window = activity.getWindow();
+        Window window = getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         int option = window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
@@ -66,38 +67,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 是否横屏
+     * 初始化View视图
      */
-    protected boolean isLandscape() {
-        return false;
+    protected abstract void initView();
+
+    /**
+     * 初始化View事件
+     */
+    protected void initEvent() {
     }
 
     /**
-     * setContentView之后设定
-     */
-    protected void initAfterContent() {
-        //去除window默认背景，防止过度绘制
-        getWindow().setBackgroundDrawable(null);
-    }
-
-    /**
-     * 初始化布局
-     */
-    protected abstract int getContentView();
-
-    /**
-     * 初始化布局控件
-     */
-    protected abstract void initComponent();
-
-    /**
-     * 初始化事件响应
-     */
-    protected void initEventHandlers() {
-    }
-
-    /**
-     * 初次加载数据
+     * 加载数据
      */
     protected abstract void loadData(Bundle savedInstanceState);
 
@@ -122,27 +103,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.mFocusAutoLose = b;
     }
 
-    /**
-     * 点击空白处控制软键盘和焦点隐藏或显示
-     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
-            if (isEdt(v, ev) && mKeyboardAutoHide) {
+            if (isEditText(v, ev) && mKeyboardAutoHide) {
                 hideSoftInput(v);
                 if (mFocusAutoLose) {
                     v.clearFocus();
                 }
             }
         }
+
         return super.dispatchTouchEvent(ev);
     }
 
-    /**
-     * 判断当前焦点是否是输入框
-     */
-    public boolean isEdt(View v, MotionEvent event) {
+    private boolean isEditText(View v, MotionEvent event) {
         if (v instanceof EditText) {
             int[] leftTop = {0, 0};
             v.getLocationInWindow(leftTop);
@@ -151,11 +127,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
 
-            return !(event.getX() > left)
-                    || !(event.getX() < right)
-                    || !(event.getY() > top)
-                    || !(event.getY() < bottom);
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
         }
+
         return false;
     }
 
