@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--基础标题栏-->
+    <declare-styleable name="BaseTitleBar">
+        <!--background-->
+        <attr name="tb_root_bg" format="color" />
+
+        <!--back icon-->
+        <attr name="tb_back_icon_visible" format="boolean" />
+        <attr name="tb_back_icon" format="reference" />
+
+        <!--action-->
+        <attr name="tb_action_padding" format="dimension" />
+        <attr name="tb_action_spacing" format="dimension" />
+        <!--action text-->
+        <attr name="tb_action_text_size" format="dimension" />
+        <attr name="tb_action_text_color" format="color" />
+        <!--action icon-->
+        <attr name="tb_action_icon_width" format="dimension" />
+        <attr name="tb_action_icon_height" format="dimension" />
+    </declare-styleable>
+
+    <!--标题栏-->
+    <declare-styleable name="TitleBar">
+        <!--title-->
+        <attr name="title_text" format="string" />
+        <attr name="title_color" format="color" />
+        <!--subtitle-->
+        <attr name="subtitle_text" format="string" />
+        <attr name="subtitle_color" format="color" />
+    </declare-styleable>
+
+    <!--最大宽、高的FrameLayout-->
+    <declare-styleable name="MaxSizeFrameLayout">
+        <!--最大宽度-->
+        <attr name="maxWidthRatio" format="reference|float" />
+        <attr name="maxWidthDimen" format="reference|dimension" />
+        <!--最大高度-->
+        <attr name="maxHeightRatio" format="reference|float" />
+        <attr name="maxHeightDimen" format="reference|dimension" />
+    </declare-styleable>
+
+    <!--自动搜索编辑框-->
+    <declare-styleable name="AutoCompleteEditText">
+        <attr name="threshold" format="integer" />
+        <attr name="maxLines" format="integer" />
+    </declare-styleable>
+
+    <!--数字输入框-->
+    <declare-styleable name="NumberEdittext">
+        <!--保留几位小数点, 0:不保留小数  1:保留一位小数 等等；默认俩位小数-->
+        <attr name="decimals" format="integer" />
+        <!--支持符号（负数）-->
+        <attr name="supMinus" format="boolean" />
+
+    </declare-styleable>
+
+</resources>
