@@ -17,7 +17,7 @@ public final class GsonUtil {
     private static final Gson GSON_NO_NULLS = createGson(false);
 
     private GsonUtil() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
+        throw new UnsupportedOperationException("you can't instantiate me...");
     }
 
     /**

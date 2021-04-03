@@ -17,6 +17,7 @@ import android.util.TypedValue;
 public final class DensityUtil {
 
     private DensityUtil() {
+        throw new UnsupportedOperationException("you can't instantiate me...");
     }
 
     /**

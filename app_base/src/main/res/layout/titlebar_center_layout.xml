@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="18dp"
+        tools:text="标题"
+        tools:textColor="#333333" />
+
+    <TextView
+        android:id="@+id/subtitle_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="12dp"
+        android:visibility="gone"
+        tools:text="小标题"
+        tools:textColor="#333333"
+        tools:visibility="visible" />
+</LinearLayout>
+
+
+
+

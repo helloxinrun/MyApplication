@@ -30,6 +30,7 @@ public final class SPUtil {
     private static final Gson mGson = new Gson();
 
     private SPUtil() {
+        throw new UnsupportedOperationException("you can't instantiate me...");
     }
 
     private static Application getApp() {

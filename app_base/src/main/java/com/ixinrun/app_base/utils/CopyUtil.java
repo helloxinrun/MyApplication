@@ -17,6 +17,7 @@ import java.util.List;
 public final class CopyUtil {
 
     private CopyUtil() {
+        throw new UnsupportedOperationException("you can't instantiate me...");
     }
 
     private static Gson sGson = new Gson();

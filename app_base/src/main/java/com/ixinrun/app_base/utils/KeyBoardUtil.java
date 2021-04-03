@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 public final class KeyBoardUtil {
 
     private KeyBoardUtil() {
+        throw new UnsupportedOperationException("you can't instantiate me...");
     }
 
     /**

@@ -20,6 +20,10 @@ import androidx.annotation.IntRange;
  */
 public final class StatusBarUtil {
 
+    private StatusBarUtil() {
+        throw new UnsupportedOperationException("you can't instantiate me...");
+    }
+
     /**
      * 设置状态栏全透明
      *
