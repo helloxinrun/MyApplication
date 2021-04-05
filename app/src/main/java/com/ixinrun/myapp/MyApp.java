@@ -1,6 +1,6 @@
 package com.ixinrun.myapp;
 
-import com.ixinrun.app_base.BaseApplication;
+import com.ixinrun.base.BaseApplication;
 
 public class MyApp extends BaseApplication {
 

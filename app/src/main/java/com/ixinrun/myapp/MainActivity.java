@@ -2,7 +2,7 @@ package com.ixinrun.myapp;
 
 import android.os.Bundle;
 
-import com.ixinrun.app_base.activity.BaseActivity;
+import com.ixinrun.base.activity.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 
