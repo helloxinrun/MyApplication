@@ -13,8 +13,11 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.ixinrun.base.activity.view.IBaseView;
 
 /**
  * 描述：BaseActivity
@@ -23,16 +26,22 @@ import androidx.appcompat.app.AppCompatActivity;
  * @author : ixinrun
  * @date : 2018/12/24
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements IBaseView {
+
     /**
-     * activity唯一标识
+     * 唯一标识
      */
-    protected final String TAG = this.getClass().getName();
+    protected final String mTag = initTag();
 
     /**
      * Context上下文
      */
     protected Activity mContext;
+
+    /**
+     * IBaseView的包装实现类
+     */
+    private IBaseView mWrapView;
 
     private boolean mKeyboardAutoHide = true;
     private boolean mFocusAutoLose = false;
@@ -42,10 +51,23 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        mWrapView = initBaseViewImpl(mContext, mTag);
+        if (mWrapView == null) {
+            throw new NullPointerException("BaseActivity's BaseViewImpl is NULL and you must initialize it.");
+        }
         initBase();
         initView();
         initEvent();
         loadData(savedInstanceState);
+    }
+
+    /**
+     * 初始化唯一标识
+     *
+     * @return
+     */
+    protected String initTag() {
+        return getClass().getName();
     }
 
     /**
@@ -186,4 +208,55 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void onRecycle() {
     }
+
+    /**
+     * ---------------------------------------view操作代理------------------------------------
+     */
+
+    @Override
+    public void showProgress() {
+        mWrapView.showProgress();
+    }
+
+    @Override
+    public void showProgress(boolean cancelable) {
+        mWrapView.showProgress(cancelable);
+    }
+
+    @Override
+    public void closeProgress() {
+        mWrapView.closeProgress();
+    }
+
+    @Override
+    public void tip(@NonNull String msg) {
+        mWrapView.tip(msg);
+    }
+
+    @Override
+    public void tip(int resId) {
+        mWrapView.tip(resId);
+    }
+
+    @Override
+    public void tip(@NonNull String msg, @NonNull TipEnum tipEnum) {
+        mWrapView.tip(msg, tipEnum);
+    }
+
+    @Override
+    public void tip(int resId, @NonNull TipEnum tipEnum) {
+        mWrapView.tip(resId, tipEnum);
+    }
+
+    @Override
+    public void onViewDestroy() {
+        mWrapView.onViewDestroy();
+    }
+
+    /**
+     * IBaseView包装实现
+     *
+     * @return BaseViewImpl
+     */
+    protected abstract IBaseView initBaseViewImpl(Context context, String tag);
 }
