@@ -8,6 +8,14 @@ import androidx.multidex.MultiDexApplication;
 
 import com.ixinrun.base.utils.AppUtil;
 
+/**
+ * 描述：BaseApplication
+ * 所有Application继承于BaseApplication
+ * </p>
+ *
+ * @author : ixinrun
+ * @date : 2019/8/27
+ */
 public class BaseApplication extends MultiDexApplication {
     private static Application sApp;
     private PowerManager.WakeLock mWakeLock;

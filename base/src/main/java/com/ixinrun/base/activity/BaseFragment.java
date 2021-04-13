@@ -77,7 +77,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     /**
      * 初始化View事件
      */
-    private void initEvent() {
+    protected void initEvent() {
     }
 
     /**

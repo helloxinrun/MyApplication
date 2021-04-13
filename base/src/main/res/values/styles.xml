@@ -12,10 +12,16 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
-    <!--AnimationStyle-->
+    <!--BaseBottomDialog's animations style-->
     <style name="BaseBottomDialogStyle">
         <item name="android:windowEnterAnimation">@anim/bottom_enter_anim</item>
         <item name="android:windowExitAnimation">@anim/bottom_exit_anim</item>
+    </style>
+
+    <!--保活，一像素Activity主题-->
+    <style name="OnePixelActivityTheme">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
 </resources>

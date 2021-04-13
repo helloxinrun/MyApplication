@@ -3,7 +3,19 @@
     package="com.ixinrun.base">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+
+        <!--保活，一像素Activity-->
+        <activity
+            android:name=".service.OnePixelActivity"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="false"
+            android:launchMode="singleInstance"
+            android:theme="@style/OnePixelActivityTheme" />
+
+    </application>
 
 </manifest>

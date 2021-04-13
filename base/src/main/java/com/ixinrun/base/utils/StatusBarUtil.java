@@ -67,22 +67,11 @@ public final class StatusBarUtil {
         Window window = activity.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        //设置装填栏颜色
         window.setStatusBarColor(calculateStatusColor(color, alpha));
-    }
-
-    /**
-     * 设置状态栏主题
-     *
-     * @param activity    上下文
-     * @param isLightMode true 白色主题深色文字；false 深色主题白色问题
-     */
-    public static void lightMode(Activity activity, boolean isLightMode) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return;
-        }
-        Window window = activity.getWindow();
+        //设置状态栏主题
         int option = window.getDecorView().getSystemUiVisibility();
-        if (isLightMode) {
+        if (isLightColor(color)) {
             option |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         } else {
             option &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
@@ -109,6 +98,17 @@ public final class StatusBarUtil {
         green = (int) (green * a + 0.5);
         blue = (int) (blue * a + 0.5);
         return 0xff << 24 | red << 16 | green << 8 | blue;
+    }
+
+    /**
+     * 判断状态栏主题
+     *
+     * @param color 状态栏颜色
+     * @return boolean 浅色or深色
+     */
+    private static boolean isLightColor(int color) {
+        double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
+        return darkness < 0.5;
     }
 
     /**

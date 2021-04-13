@@ -35,7 +35,7 @@ import java.util.List;
  * @date : 2019/9/2
  */
 public class BaseTitleBar extends FrameLayout {
-    public final String TAG = this.getClass().getSimpleName();
+    protected final String TAG = this.getClass().getSimpleName();
 
     private RelativeLayout mTitleBarRootRl;
     private ImageView mTitleBarBackIv;
