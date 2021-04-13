@@ -2,8 +2,6 @@ package com.ixinrun.base.img;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
@@ -70,8 +68,7 @@ public class ImageLoaderMgr {
     @SuppressLint("CheckResult")
     public void load(String url, ImageView iv) {
         Builder builder = getBuilder();
-        RequestOptions options = new RequestOptions()
-                .placeholder(new ColorDrawable(Color.parseColor("#eeeeee")));
+        RequestOptions options = new RequestOptions();
 
         float thumbnail = 0;
         if (builder != null) {
