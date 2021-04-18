@@ -31,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     /**
      * 唯一标识
      */
-    protected final String mTag = initTag();
+    protected final String mTag = getClass().getName();
 
     /**
      * Context上下文
@@ -55,25 +55,16 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         if (mWrapView == null) {
             throw new NullPointerException("BaseActivity's BaseViewImpl is NULL and you must initialize it.");
         }
-        initBase();
+        init();
         initView();
         initEvent();
         loadData(savedInstanceState);
     }
 
     /**
-     * 初始化唯一标识
-     *
-     * @return
+     * 初始化view之前的相关操作
      */
-    protected String initTag() {
-        return getClass().getName();
-    }
-
-    /**
-     * 初始化设定view之前的相关操作
-     */
-    protected void initBase() {
+    protected void init() {
         if (isTranslucentStatusBar()) {
             translucentStatusBar();
         }
@@ -249,8 +240,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     }
 
     @Override
-    public void onViewDestroy() {
-        mWrapView.onViewDestroy();
+    public void detachView() {
+        mWrapView.detachView();
     }
 
     /**

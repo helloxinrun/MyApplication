@@ -23,11 +23,6 @@ public class BaseViewImpl implements IBaseView {
     }
 
     @Override
-    public void onViewDestroy() {
-
-    }
-
-    @Override
     public void showProgress() {
 
     }
@@ -59,6 +54,11 @@ public class BaseViewImpl implements IBaseView {
 
     @Override
     public void tip(int resId, @NonNull TipEnum tipEnum) {
+
+    }
+
+    @Override
+    public void detachView() {
 
     }
 }

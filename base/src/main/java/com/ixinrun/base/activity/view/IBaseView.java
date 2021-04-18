@@ -12,7 +12,7 @@ import androidx.annotation.MainThread;
 @MainThread
 public interface IBaseView extends ITipView, IProgressView {
     /**
-     * 视图销毁
+     * 解绑视图
      */
-    void onViewDestroy();
+    void detachView();
 }

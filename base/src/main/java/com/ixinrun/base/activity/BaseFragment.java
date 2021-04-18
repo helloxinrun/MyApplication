@@ -25,7 +25,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     /**
      * 唯一标识
      */
-    protected final String mTag = initTag();
+    protected final String mTag = getClass().getName();
 
     /**
      * 当前fragment的Context
@@ -37,15 +37,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
      */
     private IBaseView mWrapView;
 
-    /**
-     * 初始化唯一标识
-     *
-     * @return
-     */
-    protected String initTag() {
-        return getClass().getName();
-    }
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -56,17 +47,32 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         }
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        init();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = initView(inflater, container);
+        return initView(inflater, container);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initEvent();
         loadData(savedInstanceState);
+    }
 
-        return view;
+    /**
+     * 初始化view之前的相关操作
+     */
+    protected void init() {
     }
 
     /**
@@ -125,8 +131,8 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     }
 
     @Override
-    public void onViewDestroy() {
-        mWrapView.onViewDestroy();
+    public void detachView() {
+        mWrapView.detachView();
     }
 
     /**
