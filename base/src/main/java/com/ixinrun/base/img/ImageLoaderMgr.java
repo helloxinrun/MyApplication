@@ -13,6 +13,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.ixinrun.base.BaseApplication;
 
 import java.security.MessageDigest;
@@ -94,6 +95,9 @@ public class ImageLoaderMgr {
                     }
                 });
             }
+            if (builder.signature != null) {
+                options.signature(new ObjectKey(builder.signature));
+            }
 
             //缩略值
             thumbnail = builder.thumbnail;
@@ -114,8 +118,9 @@ public class ImageLoaderMgr {
         private int error;
         private int width;
         private int height;
-        private float thumbnail;
         private WatermarkCallback watermarkCallback;
+        private String signature;
+        private float thumbnail;
 
         /**
          * 设置过渡图
@@ -153,17 +158,6 @@ public class ImageLoaderMgr {
         }
 
         /**
-         * 设置缩略图缩放值
-         *
-         * @param thumbnail
-         * @return
-         */
-        public Builder thumbnail(float thumbnail) {
-            this.thumbnail = thumbnail;
-            return this;
-        }
-
-        /**
          * 水印回調
          *
          * @param callback
@@ -171,6 +165,28 @@ public class ImageLoaderMgr {
          */
         public Builder watermark(WatermarkCallback callback) {
             this.watermarkCallback = callback;
+            return this;
+        }
+
+        /**
+         * 签名，如果签名不一样则忽略从缓存读取
+         *
+         * @param signature
+         * @return
+         */
+        public Builder signature(String signature) {
+            this.signature = signature;
+            return this;
+        }
+
+        /**
+         * 设置缩略图缩放值
+         *
+         * @param thumbnail
+         * @return
+         */
+        public Builder thumbnail(float thumbnail) {
+            this.thumbnail = thumbnail;
             return this;
         }
 
